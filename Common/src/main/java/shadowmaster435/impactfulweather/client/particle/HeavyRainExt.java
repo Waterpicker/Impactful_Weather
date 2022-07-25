@@ -22,12 +22,12 @@ public class HeavyRainExt extends SimpleAnimatedParticle {
         cworld = world;
         this.setSprite(sprites.get(world.random));
         this.setSize(0.02F, 0.02F);
-        this.light = world.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = world.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
 
     }
     public void tick() {
-        this.light = level.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = level.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
         this.quadSize = 0.125f;
         ++this.age;

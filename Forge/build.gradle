@@ -112,7 +112,7 @@ dependencies {
 
     // Quality of Life Mods
 //    runtimeOnly fg.deobf("curse.maven:catalogue-459701:3871526")
-    runtimeOnly fg.deobf("fuzs.bettermodsbutton:bettermodsbutton-forge:4.0.1")
+//    runtimeOnly fg.deobf("fuzs.bettermodsbutton:bettermodsbutton-forge:3.2.2")
 //    runtimeOnly fg.deobf("curse.maven:configmenusforge-544048:3822820")
 //    runtimeOnly fg.deobf("curse.maven:configured-457570:3871521")
 }
@@ -197,60 +197,60 @@ javadoc {
 
 jar.finalizedBy('reobfJar')
 
-publishing {
-    publications {
-        mavenJava (MavenPublication) {
-            artifactId = "${modId}-forge"
-            version = modVersion
-            from components.java
-            // exclude certain dependencies when publishing to maven
-            // from https://stackoverflow.com/a/50121790
-            pom.withXml {
-                asNode().dependencies.dependency.each { dep ->
-                    if (["catalogue", "bettermodsbutton", "configmenusforge", "configured"].stream().anyMatch(mod -> dep.artifactId.last().value().last().contains(mod))) {
-                        assert dep.parent().remove(dep)
-                    }
-                }
-            }
-            pom {
-                name = "${modName} [Forge]"
-                description = "${modDescription}"
-                url = "${modSourceUrl}"
-                scm {
-                    url = "${modSourceUrl}"
-                    connection = "${modSourceUrl}".replace("https", "scm:git:git").concat(".git")
-                    developerConnection = "${modSourceUrl}".replace("https://github.com/", "scm:git:git@github.com:").concat(".git")
-                }
-                issueManagement {
-                    system = 'github'
-                    url = "${modIssueUrl}"
-                }
-                licenses {
-                    license {
-                        name = 'MPL-2'
-                        url = 'https://www.mozilla.org/en-US/MPL/2.0/'
-                    }
-                }
-                developers {
-                    developer {
-                        id = "${modAuthor}".toLowerCase()
-                        name = "${modAuthor}"
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            name = 'FuzsModResources'
-            url "file://${project.modResources}/maven"
-        }
-    }
-}
-
-signing {
-    sign publishing.publications.mavenJava
-}
+//publishing {
+//    publications {
+//        mavenJava (MavenPublication) {
+//            artifactId = "${modId}-forge"
+//            version = modVersion
+//            from components.java
+//            // exclude certain dependencies when publishing to maven
+//            // from https://stackoverflow.com/a/50121790
+//            pom.withXml {
+//                asNode().dependencies.dependency.each { dep ->
+//                    if (["catalogue", "bettermodsbutton", "configmenusforge", "configured"].stream().anyMatch(mod -> dep.artifactId.last().value().last().contains(mod))) {
+//                        assert dep.parent().remove(dep)
+//                    }
+//                }
+//            }
+//            pom {
+//                name = "${modName} [Forge]"
+//                description = "${modDescription}"
+//                url = "${modSourceUrl}"
+//                scm {
+//                    url = "${modSourceUrl}"
+//                    connection = "${modSourceUrl}".replace("https", "scm:git:git").concat(".git")
+//                    developerConnection = "${modSourceUrl}".replace("https://github.com/", "scm:git:git@github.com:").concat(".git")
+//                }
+//                issueManagement {
+//                    system = 'github'
+//                    url = "${modIssueUrl}"
+//                }
+//                licenses {
+//                    license {
+//                        name = 'MPL-2'
+//                        url = 'https://www.mozilla.org/en-US/MPL/2.0/'
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id = "${modAuthor}".toLowerCase()
+//                        name = "${modAuthor}"
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            name = 'FuzsModResources'
+//            url "file://${project.modResources}/maven"
+//        }
+//    }
+//}
+//
+//signing {
+//    sign publishing.publications.mavenJava
+//}
 
 task signJar(type: net.minecraftforge.gradle.common.tasks.SignJar, dependsOn: jar) {
     onlyIf { project.hasProperty('keyStore') }
@@ -264,46 +264,46 @@ task signJar(type: net.minecraftforge.gradle.common.tasks.SignJar, dependsOn: ja
 jar.finalizedBy 'signJar'
 signJar.mustRunAfter 'reobfJar'
 
-curseforge {
-    if (!file('../CHANGELOG.md').canRead()) { throw new FileNotFoundException("Could not read changelog file") }
-    apiKey = project.findProperty('curseApiToken')
-    project {
-        id = projectCurseId
-        changelogType = 'markdown'
-        changelog = file('../CHANGELOG.md')
-        releaseType = projectReleaseType
-        addGameVersion 'Forge'
-        projectGameVersions.split(",").each {
-            addGameVersion it.trim()
-        }
-        mainArtifact(jar) {
-            displayName = "[FORGE] [${minecraftVersion}] ${rootProject.name}-v${modVersion}"
-        }
-        addArtifact sourcesJar
-    }
-    options {
-//        debug = true
-        javaVersionAutoDetect = false
-        forgeGradleIntegration = false
-    }
-}
+//curseforge {
+//    if (!file('../CHANGELOG.md').canRead()) { throw new FileNotFoundException("Could not read changelog file") }
+//    apiKey = project.findProperty('curseApiToken')
+//    project {
+//        id = projectCurseId
+//        changelogType = 'markdown'
+//        changelog = file('../CHANGELOG.md')
+//        releaseType = projectReleaseType
+//        addGameVersion 'Forge'
+//        projectGameVersions.split(",").each {
+//            addGameVersion it.trim()
+//        }
+//        mainArtifact(jar) {
+//            displayName = "[FORGE] [${minecraftVersion}] ${rootProject.name}-v${modVersion}"
+//        }
+//        addArtifact sourcesJar
+//    }
+//    options {
+////        debug = true
+//        javaVersionAutoDetect = false
+//        forgeGradleIntegration = false
+//    }
+//}
 
-modrinth {
-    if (!file('../CHANGELOG.md').canRead()) { throw new FileNotFoundException("Could not read changelog file") }
-    token = project.findProperty('modrinthApiToken')
-    projectId = projectModrinthId
-    versionNumber = project.version
-    versionName = "[FORGE] [${minecraftVersion}] ${rootProject.name}-v${modVersion}"
-    changelog = file('../CHANGELOG.md').text
-    versionType = projectReleaseType
-    uploadFile = jar // This is the java jar task
-    projectGameVersions.split(",").each {
-        gameVersions.add it.trim()
-    }
-    loaders.add 'forge'
-    additionalFiles.add file("${project.buildDir}/libs/${project.archivesBaseName}-${project.version}-sources.jar")
-//	debugMode = true
-}
+//modrinth {
+//    if (!file('../CHANGELOG.md').canRead()) { throw new FileNotFoundException("Could not read changelog file") }
+//    token = project.findProperty('modrinthApiToken')
+//    projectId = projectModrinthId
+//    versionNumber = project.version
+//    versionName = "[FORGE] [${minecraftVersion}] ${rootProject.name}-v${modVersion}"
+//    changelog = file('../CHANGELOG.md').text
+//    versionType = projectReleaseType
+//    uploadFile = jar // This is the java jar task
+//    projectGameVersions.split(",").each {
+//        gameVersions.add it.trim()
+//    }
+//    loaders.add 'forge'
+//    additionalFiles.add file("${project.buildDir}/libs/${project.archivesBaseName}-${project.version}-sources.jar")
+////	debugMode = true
+//}
 
 import groovy.json.*
 

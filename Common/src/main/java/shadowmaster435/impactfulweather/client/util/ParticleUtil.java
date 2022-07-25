@@ -3,19 +3,19 @@ package shadowmaster435.impactfulweather.client.util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
+import net.minecraft.world.level.dimension.DimensionType;
 import shadowmaster435.impactfulweather.config.ClientConfig;
 import shadowmaster435.impactfulweather.init.ModRegistry;
 import shadowmaster435.impactfulweather.client.particle.HeavyRain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ParticleUtil {
 
@@ -60,7 +60,7 @@ public class ParticleUtil {
         assert world2 != null;
         assert player2 != null;
         BlockPos pos = player2.blockPosition();
-        RandomSource random = instance2.level.random;
+        Random random = instance2.level.random;
 
         int i = pos.getX();
         int j = pos.getY();
@@ -187,7 +187,7 @@ public class ParticleUtil {
 
             } else {
                     for (int l = 0; l < 8; ++l) {
-                        if (world2.getBiome(new BlockPos(Mth.lerp(world2.random.nextDouble(), x - 64, x + 64), Mth.lerp(world2.random.nextDouble(), 64, 256), Mth.lerp(world2.random.nextDouble(), z - 64, z + 64))).is(Biomes.MANGROVE_SWAMP) &&  !instance2.isPaused() && ClientConfig.INSTANCE.particleToggles.fireflies.get() && (world2.getDayTime() < 22000 && world2.getDayTime() > 14000)) {
+                        if (world2.getBiome(new BlockPos(Mth.lerp(world2.random.nextDouble(), x - 64, x + 64), Mth.lerp(world2.random.nextDouble(), 64, 256), Mth.lerp(world2.random.nextDouble(), z - 64, z + 64))).is(Biomes.SWAMP)/* Not sure if this will affect things*/ &&  !instance2.isPaused() && ClientConfig.INSTANCE.particleToggles.fireflies.get() && (world2.getDayTime() < 22000 && world2.getDayTime() > 14000)) {
                             for (int i1 = 1; i1 <= ClientConfig.INSTANCE.particleAmounts.fireflymodifier.get(); ++i1) {
                                 if (Math.random() > 0.95) {
 
@@ -202,7 +202,7 @@ public class ParticleUtil {
                     }
                 }
             //nether particles
-            if (player2.getCommandSenderWorld().dimensionTypeId().equals(BuiltinDimensionTypes.NETHER) && (weathertoggle || ClientConfig.INSTANCE.particleToggles.endlessnweather.get()) && !Minecraft.getInstance().isPaused()) {
+            if (player2.getCommandSenderWorld().dimensionTypeRegistration().is(DimensionType.NETHER_LOCATION) && (weathertoggle || ClientConfig.INSTANCE.particleToggles.endlessnweather.get()) && !Minecraft.getInstance().isPaused()) {
                 if (world2.getBiome(player2.blockPosition()).unwrapKey().isPresent()) {
                     if (ClientConfig.INSTANCE.particleToggles.updrafts.get() && world2.getBiome(player2.blockPosition()).unwrapKey().get().equals(Biomes.NETHER_WASTES) || world2.getBiome(player2.blockPosition()).unwrapKey().get().equals(Biomes.BASALT_DELTAS)) {
                         for (int l = 0; l < 8; ++l) {

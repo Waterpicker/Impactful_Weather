@@ -116,7 +116,7 @@ public class MiscUtil {
         } else if ((world.getGameTime() < 1000 && world.getGameTime() > 0)|| (world.getGameTime() < 13000 && world.getGameTime() > 12000)) {
             timelight = 12;
         }
-        int gammaval = (int) Math.floor(Minecraft.getInstance().options.gamma().get() * 3d);
+        int gammaval = (int) Math.floor(Minecraft.getInstance().options.gamma * 3d);
         if (blocklight < 3) {
             light = Math.abs(timelight - skylight + gammaval);
         } else {

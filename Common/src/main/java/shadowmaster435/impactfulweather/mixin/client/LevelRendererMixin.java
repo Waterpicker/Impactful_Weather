@@ -89,7 +89,7 @@ public abstract class LevelRendererMixin {
             LevelReader worldView = client.level;
             BlockPos blockPos = new BlockPos(camera.getPosition());
             BlockPos blockPos2 = null;
-            int i = (int)(100.0F * f * f) / (client.options.particles().get() == ParticleStatus.DECREASED ? 2 : 1);
+            int i = (int)(100.0F * f * f) / (client.options.particles == ParticleStatus.DECREASED ? 2 : 1);
 
             for(int j = 0; j < i; ++j) {
                 int k = random.nextInt(21) - 10;
@@ -98,7 +98,7 @@ public abstract class LevelRendererMixin {
                 Biome biome = (Biome)worldView.getBiome(blockPos3).value();
                 if (blockPos3.getY() > worldView.getMinBuildHeight() && blockPos3.getY() <= blockPos.getY() + 10 && blockPos3.getY() >= blockPos.getY() - 10 && biome.getPrecipitation() == Biome.Precipitation.RAIN && biome.warmEnoughToRain(blockPos3)) {
                     blockPos2 = blockPos3.below();
-                    if (client.options.particles().get() == ParticleStatus.MINIMAL) {
+                    if (client.options.particles == ParticleStatus.MINIMAL) {
                         break;
                     }
 

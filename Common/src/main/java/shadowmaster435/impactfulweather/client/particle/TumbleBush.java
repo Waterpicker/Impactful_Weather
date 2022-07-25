@@ -23,7 +23,7 @@ public class TumbleBush extends TextureSheetParticle {
         this.setSize(1F, 1F);
         this.lifetime = 100;
         this.setSprite(sprites.get(world.random));
-        this.light = world.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = world.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
     }
     public int age1;
@@ -31,7 +31,7 @@ public class TumbleBush extends TextureSheetParticle {
 
     public static float rotvel = 0;
     public void tick() {
-        this.light = level.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = level.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
         this.xo = this.x;
         this.yo = this.y;

@@ -26,14 +26,14 @@ public class BlizzardSnow extends SimpleAnimatedParticle {
         cworld = world;
         this.setSize(0.01F, 0.01F);
         this.setSprite(sprites.get(world.random));
-        this.light = world.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = world.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
     }
 
     public float groundtimer = 5;
 
     public void tick() {
-        this.light = level.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = level.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
         this.xo = this.x;
         this.yo = this.y;

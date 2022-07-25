@@ -24,12 +24,12 @@ public class Gust extends SimpleAnimatedParticle {
         this.age = 0;
         this.quadSize = (float) (Math.random() / 2) + 0.2f;
         this.setSpriteFromAge(this.sprites);
-        this.light = world.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = world.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
 
     }
     public void tick() {
-        this.light = level.getLightLevelDependentMagicValue(new BlockPos(this.x, this.y, this.z)) + 0.01f;
+        this.light = level.getLightEmission(new BlockPos(this.x, this.y, this.z)) + 0.01f;
         this.setColor((15f / this.light),(15f / this.light), (15f / this.light));
         this.xo = this.x;
         this.yo = this.y;

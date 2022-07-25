@@ -2,7 +2,7 @@ package shadowmaster435.impactfulweather.client;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -18,7 +18,7 @@ public class BiomeParticleWeatherForgeClient {
     }
 
     @SubscribeEvent
-    public <T extends ParticleOptions> void onRegisterParticleProviders(final RegisterParticleProvidersEvent evt) {
+    public <T extends ParticleOptions> void onRegisterParticleProviders(final ParticleFactoryRegisterEvent evt) {
         BiomeParticleWeather.LOGGER.info("factory setup");
     }
 }

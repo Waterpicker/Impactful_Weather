@@ -3,10 +3,11 @@ package shadowmaster435.impactfulweather.client.core;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.Pair;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -52,9 +53,9 @@ public class ForgeClientRegistration implements ClientRegistration {
 
     @SuppressWarnings("unchecked")
     @SubscribeEvent
-    public void onRegisterParticleProviders(final RegisterParticleProvidersEvent evt) {
-        this.particleProviders.forEach(pair -> evt.register((ParticleType<ParticleOptions>) pair.left().get(), (ParticleProvider<ParticleOptions>) pair.right()));
-        this.spriteParticleFactories.forEach(pair -> evt.register((ParticleType<ParticleOptions>) pair.left().get(), spriteSet -> (ParticleProvider<ParticleOptions>) pair.right().create(spriteSet)));
+    public void onRegisterParticleProviders(final ParticleFactoryRegisterEvent evt) {
+        this.particleProviders.forEach(pair -> Minecraft.getInstance().particleEngine.register((ParticleType<ParticleOptions>) pair.left().get(), (ParticleProvider<ParticleOptions>) pair.right()));
+        this.spriteParticleFactories.forEach(pair -> Minecraft.getInstance().particleEngine.register((ParticleType<ParticleOptions>) pair.left().get(), spriteSet -> (ParticleProvider<ParticleOptions>) pair.right().create(spriteSet)));
     }
 
     /**
